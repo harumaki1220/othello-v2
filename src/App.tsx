@@ -46,7 +46,7 @@ function App() {
             BLACK {blackCount}
           </div>
           <div
-            className={`px-4 py-2 rounded text-black ${turn === "WHITE" ? "bg-white ring-2 ring-black" : "opacity-50"}`}
+            className={`px-4 py-2 rounded ${turn === "WHITE" ? "bg-white ring-2 text-black ring-black" : "opacity-50"}`}
           >
             WHITE {whiteCount}
           </div>
