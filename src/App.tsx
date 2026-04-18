@@ -11,6 +11,8 @@ function App() {
   const [board, setBoard] = useState(createInitialBoard());
   const [turn, setTurn] = useState<"BLACK" | "WHITE">("BLACK");
 
+  const currentValidMoves = getValidMoves(board, turn);
+
   const handleCellClick = (x: number, y: number) => {
     const nextBoard = putDisc(board, turn, x, y);
 
@@ -49,7 +51,11 @@ function App() {
         </div>
       </div>
 
-      <Board board={board} onCellClick={handleCellClick} />
+      <Board
+        board={board}
+        validMoves={currentValidMoves}
+        onCellClick={handleCellClick}
+      />
     </div>
   );
 }
