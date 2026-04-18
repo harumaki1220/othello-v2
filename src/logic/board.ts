@@ -1,4 +1,4 @@
-import type { Board } from "../types/othello";
+import type { Board, Position } from "../types/othello";
 
 const DIRECTIONS = [
   [-1, 0],
@@ -76,4 +76,21 @@ export const createInitialBoard = (): Board => {
   board[4][4] = "WHITE";
 
   return board;
+};
+
+export const getValidMoves = (
+  board: Board,
+  color: "BLACK" | "WHITE",
+): Position[] => {
+  const validMoves: Position[] = [];
+
+  for (let y = 0; y < 8; y++) {
+    for (let x = 0; x < 8; x++) {
+      if (putDisc(board, color, x, y) !== null) {
+        validMoves.push({ x, y });
+      }
+    }
+  }
+
+  return validMoves;
 };
