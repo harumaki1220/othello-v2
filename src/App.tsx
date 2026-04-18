@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Board } from "./components/Board";
-import { putDisc, getOpponent, createInitialBoard } from "./logic/board";
+import {
+  putDisc,
+  getOpponent,
+  createInitialBoard,
+  getValidMoves,
+} from "./logic/board";
 
 function App() {
   const [board, setBoard] = useState(createInitialBoard());
@@ -11,7 +16,18 @@ function App() {
 
     if (nextBoard) {
       setBoard(nextBoard);
-      setTurn(getOpponent(turn));
+      const opponent = getOpponent(turn);
+
+      const opponentMoveCount = getValidMoves(nextBoard, opponent).length;
+      const myMoveCount = getValidMoves(nextBoard, turn).length;
+
+      if (opponentMoveCount > 0) {
+        setTurn(opponent);
+      } else if (myMoveCount > 0) {
+        alert("パス！");
+      } else {
+        alert("ゲーム終了！");
+      }
     }
   };
 
