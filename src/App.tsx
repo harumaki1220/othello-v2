@@ -12,6 +12,8 @@ function App() {
   const [turn, setTurn] = useState<"BLACK" | "WHITE">("BLACK");
 
   const currentValidMoves = getValidMoves(board, turn);
+  const blackCount = board.flat().filter((cell) => cell === "BLACK").length;
+  const whiteCount = board.flat().filter((cell) => cell === "WHITE").length;
 
   const handleCellClick = (x: number, y: number) => {
     const nextBoard = putDisc(board, turn, x, y);
@@ -41,12 +43,12 @@ function App() {
           <div
             className={`px-4 py-2 rounded ${turn === "BLACK" ? "bg-black ring-2 ring-white" : "opacity-50"}`}
           >
-            BLACK
+            BLACK {blackCount}
           </div>
           <div
             className={`px-4 py-2 rounded text-black ${turn === "WHITE" ? "bg-white ring-2 ring-black" : "opacity-50"}`}
           >
-            WHITE
+            WHITE {whiteCount}
           </div>
         </div>
       </div>
