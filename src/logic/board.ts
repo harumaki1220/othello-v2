@@ -65,3 +65,15 @@ export const putDisc = (
 
   return newBoard;
 };
+
+export const createInitialBoard = (): Board => {
+  const board: Board = Array.from({ length: 8 }, () => Array(8).fill("EMPTY"));
+
+  // オセロの初期配置
+  board[3][3] = "WHITE";
+  board[3][4] = "BLACK";
+  board[4][3] = "BLACK";
+  board[4][4] = "WHITE";
+
+  return board;
+};
