@@ -104,3 +104,15 @@ export const getFlippableDiscs = (
 
   return flippable;
 };
+
+// デバッグ用：黒が(0,2)に置くと、白が確実にパスになる盤面
+export const createDebugPassBoard = (): Board => {
+  const board: Board = Array.from({ length: 8 }, () => Array(8).fill("BLACK"));
+
+  board[0][0] = "EMPTY";
+  board[0][1] = "WHITE";
+  board[0][2] = "EMPTY"; // 黒はスタート時にここをクリック
+  board[0][3] = "WHITE";
+
+  return board;
+};

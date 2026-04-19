@@ -9,6 +9,8 @@ function App() {
     currentValidMoves,
     blackCount,
     whiteCount,
+    isPass,
+    dismissPass,
     handleCellClick,
     handleReset,
   } = useOthello();
@@ -49,6 +51,17 @@ function App() {
             className="px-8 py-4 bg-white text-black font-bold hover:scale-110 transition-transform"
           >
             Play again?
+          </button>
+        </div>
+      )}
+      {isPass && (
+        <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/70 backdrop-blur-sm">
+          <div className="text-6xl font-black mb-8 text-red-400">パス!</div>
+          <button
+            onClick={dismissPass}
+            className="px-8 py-4 bg-white text-black font-bold hover:scale-110 transition-transform"
+          >
+            OK
           </button>
         </div>
       )}
