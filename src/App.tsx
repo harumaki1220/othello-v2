@@ -10,6 +10,7 @@ import {
 function App() {
   const [board, setBoard] = useState(createInitialBoard());
   const [turn, setTurn] = useState<"BLACK" | "WHITE">("BLACK");
+  const [winner, setWinner] = useState<"BLACK" | "WHITE" | "DRAW" | null>(null);
 
   const currentValidMoves = getValidMoves(board, turn);
   const blackCount = board.flat().filter((cell) => cell === "BLACK").length;
@@ -20,8 +21,15 @@ function App() {
 
     if (nextBoard) {
       setBoard(nextBoard);
-      const opponent = getOpponent(turn);
 
+      const nextBlackCount = nextBoard
+        .flat()
+        .filter((cell) => cell === "BLACK").length;
+      const nextWhiteCount = nextBoard
+        .flat()
+        .filter((cell) => cell === "WHITE").length;
+
+      const opponent = getOpponent(turn);
       const opponentMoveCount = getValidMoves(nextBoard, opponent).length;
       const myMoveCount = getValidMoves(nextBoard, turn).length;
 
@@ -30,9 +38,21 @@ function App() {
       } else if (myMoveCount > 0) {
         alert("パス！");
       } else {
-        alert("ゲーム終了！");
+        if (nextBlackCount > nextWhiteCount) {
+          setWinner("BLACK");
+        } else if (nextWhiteCount > nextBlackCount) {
+          setWinner("WHITE");
+        } else {
+          setWinner("DRAW");
+        }
       }
     }
+  };
+
+  const handleReset = () => {
+    setBoard(createInitialBoard());
+    setTurn("BLACK");
+    setWinner(null);
   };
 
   return (
@@ -58,6 +78,22 @@ function App() {
         validMoves={currentValidMoves}
         onCellClick={handleCellClick}
       />
+      {winner && (
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/70 backdrop-blur-sm">
+          <h2 className="text-6xl font-black mb-4">
+            {winner === "DRAW" ? "DRAW!" : `WINNER: ${winner}!`}
+          </h2>
+          <div className="text-2xl mb-4">
+            BLACK: {blackCount} WHITE: {whiteCount}
+          </div>
+          <button
+            onClick={handleReset}
+            className="px-8 py-4 bg-white text-black font-bold hover:scale-110 transition-transform"
+          >
+            Play again?
+          </button>
+        </div>
+      )}
     </div>
   );
 }
